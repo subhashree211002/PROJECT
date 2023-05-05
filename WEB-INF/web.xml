@@ -1,0 +1,131 @@
+<web-app>
+    <servlet>
+        <servlet-name>LogInServlet</servlet-name>
+        <servlet-class>LogInServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LogInServlet</servlet-name>
+        <url-pattern>/LogIn</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SessionInitiateServlet</servlet-name>
+        <servlet-class>SessionInitiateServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SessionInitiateServlet</servlet-name>
+        <url-pattern>/SessionInitiate</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetSessionServlet</servlet-name>
+        <servlet-class>GetSessionServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GetSessionServlet</servlet-name>
+        <url-pattern>/GetSession</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetAllTripsServlet</servlet-name>
+        <servlet-class>GetAllTripsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GetAllTripsServlet</servlet-name>
+        <url-pattern>/GetAllTrips</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetTripServlet</servlet-name>
+        <servlet-class>GetTripServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GetTripServlet</servlet-name>
+        <url-pattern>/GetTrip</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetTripDetailsServlet</servlet-name>
+        <servlet-class>GetTripDetailsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GetTripDetailsServlet</servlet-name>
+        <url-pattern>/GetTripDetails</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetItenServlet</servlet-name>
+        <servlet-class>GetItenServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GetItenServlet</servlet-name>
+        <url-pattern>/GetIten</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetBudgServlet</servlet-name>
+        <servlet-class>GetBudgServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GetBudgServlet</servlet-name>
+        <url-pattern>/GetBudg</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetChecklistServlet</servlet-name>
+        <servlet-class>GetChecklistServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GetChecklistServlet</servlet-name>
+        <url-pattern>/GetChecklist</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetTripChecklistsServlet</servlet-name>
+        <servlet-class>GetTripChecklistsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GetTripChecklistsServlet</servlet-name>
+        <url-pattern>/GetTripChecklists</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetChecklistDetailsServlet</servlet-name>
+        <servlet-class>GetChecklistDetailsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GetChecklistDetailsServlet</servlet-name>
+        <url-pattern>/GetChecklistDetails</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DelChecklistItemServlet</servlet-name>
+        <servlet-class>DelChecklistItemServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>DelChecklistItemServlet</servlet-name>
+        <url-pattern>/DelChecklistItem</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>HideChecklistItemServlet</servlet-name>
+        <servlet-class>HideChecklistItemServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>HideChecklistItemServlet</servlet-name>
+        <url-pattern>/HideChecklistItem</url-pattern>
+    </servlet-mapping>
+</web-app>

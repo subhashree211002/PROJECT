@@ -1,0 +1,25 @@
+<div class = "sign-page" style = "opacity:1;">   
+    <p class = "error"></p>
+    <form onsubmit = "return val()" action = "Signup">
+        <div class = "line">
+            <label for="type" style = "display:block;margin:auto">Your Role</label>
+            <select name="type" id="type" style = "height:20px; width:150px; margin:auto; background-color:transparent; color:white; border-color:grey;">
+                <option value="traveler" style = "background-color:black;">Traveler</option>
+                <option value="guide" style = "background:black;">Guide</option>
+            </select>
+        </div>
+        <div class = "line">
+            <label for="uname">User Name</label>
+            <input type="text" id="uname" name="uname">
+        </div>
+        <div class = "line">
+            <label for="pwd">Password</label>
+            <input type="password" id="pwd" name="pwd">
+        </div>
+        <div class = "line">
+            <label for="pwd">Confirm Password</label>
+            <input type="cnfrm-password" id="pwd" name="pwd">
+        </div>
+        <div class = "line"><button type="submit" >Signup</button></div>
+    </form>
+</div>
