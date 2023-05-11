@@ -76,7 +76,7 @@
                 height: 160px;
                 margin:5px;
                 border-radius: 20px;
-                background-color: rgba(0,0,0,0.2);
+                background-color: rgba(0,0,0,0.6);
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -107,26 +107,6 @@
             <div class = "form-content">
                 <h1>Choose your destination</h1>
                 <div id ="city-choices-dest">
-                    <div class = "img" onclick = "select_city(0)" style = "margin-left:0px;">
-                        <img src = "images/kace-rodriguez-p3OzJuT_Dks-unsplash.jpg">
-                        <div class = "head">City 1</div>
-                    </div>
-                    <div class = "img" onclick = "select_city(1)">
-                        <img src = "images/kace-rodriguez-p3OzJuT_Dks-unsplash.jpg">
-                        <div class = "head">City 2</div>
-                    </div>
-                    <div class = "img" onclick = "select_city(2)">
-                        <img src = "images/kace-rodriguez-p3OzJuT_Dks-unsplash.jpg">
-                        <div class = "head">City 3</div>
-                    </div>
-                    <div class = "img" onclick = "select_city(3)">
-                        <img src = "images/kace-rodriguez-p3OzJuT_Dks-unsplash.jpg">
-                        <div class = "head">City 4</div>
-                    </div>
-                    <div class = "img" onclick = "select_city(4)">
-                        <img src = "images/kace-rodriguez-p3OzJuT_Dks-unsplash.jpg">
-                        <div class = "head">City 5</div>
-                    </div>
                 </div>
                 <button type = "button" onclick = "dispnext(0)">Next</button>
             </div>
@@ -135,26 +115,83 @@
                 <h1>Choose your start city</h1>
                 <select name="src-city" id="src-city" style = "background-color: rgba(0,0,0,0.8); outline:none; border:none; color:white; height:50px; font-size:large;">
                     <option value="" disabled selected>Select</option>
-                    <option value="City 1">City 1</option>
-                    <option value="City 2">City 2</option>
-                    <option value="City 3">City 3</option>
-                    <option value="City 4">City 4</option>
-                    <option value="City 5">City 5</option>
-
                 </select>
-                <button type = "button" onclick = "if(document.getElementById('src-city').value!=''){dispnext(1);} else{window.alert('Please select city!');}">Next</button>
+                <button type = "button" onclick = "if(invalid()){}else if(document.getElementById('src-city').value!=''){dispnext(1);} else{window.alert('Please select city!');}">Next</button>
             </div>
 
             <div class = "form-content" style = "display: none;">
                 <h1>Choose dates for travel</h1>
                 Trip start: <input type="date" id = "start_date" name = "start_date" style = "background-color: rgba(0,0,0,0.8); outline:none; border:none; height:50px; font-size:large; color-scheme:dark;"><br>
                 Return: <input type="date"  id = "end_date" name = "end_date" style = "background-color: rgba(0,0,0,0.8); outline:none; border:none; height:50px; font-size:large; color-scheme:dark;">
-                <button type = "button" onclick = "if(document.getElementById('start_date').value!='' && document.getElementById('end_date').value!=''){start_plan();} else{window.alert('Please choose dates!');}">Start planning</button>
+                <button type = "button" onclick = "if(check_dates()){}else{start_plan();}">Start planning</button>
             </div>
         </div>
                 
         <script>
+            setInterval(sessionValidater,2000);
+            //sessionValidater();
+            function sessionValidater(){
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    //window.alert(this.responseText);
+                    if(this.responseText.split(",")[0]){
+                    }
+                    else{
+                        window.location.replace("login.html");
+                    }
+                }
+                }
+                xhttp.open("GET", "GetSession", true);
+                xhttp.send();
+            }
+
             var dest = ""
+
+            var xhttp1 = new XMLHttpRequest();
+            xhttp1.onreadystatechange = function() {
+                //window.alert("hey");
+                if (this.readyState == 4 && this.status == 200) {
+                    //window.alert("hey");
+                    display_cities(this.responseText);
+                }
+            }
+            xhttp1.open("GET", "GetCities", true);
+            xhttp1.send();
+
+            function invalid(){
+                if(document.getElementById("src-city").value==dest){
+                    window.alert("Your source and destination cannot be the same!");
+                    return 1;
+                }
+                return 0;
+            }
+
+            function check_dates(){
+                if(document.getElementById('start_date').value=='' || document.getElementById('end_date').value==''){
+                    window.alert('Please choose both dates!');
+                }
+                else if(document.getElementById('start_date').value>document.getElementById('end_date').value){
+                    window.alert('Start date cannot be lesser than end date!');
+                }
+                else{
+                    return 0;
+                }
+                return 1;
+            }
+
+            function display_cities(txt){
+                var l = txt.split("\n");
+                var txt1 = "";
+                var txt2 = "";
+                for(var i = 0; i < l.length-1; i++){
+                    txt1+="<div class = 'img' onclick = 'select_city("+i+")' style = 'margin-left:0px;'><img src = 'images/kace-rodriguez-p3OzJuT_Dks-unsplash.jpg'><div class = 'head' id='"+l[i].split(',')[1]+"'>"+l[i].split(',')[0]+"</div></div>";
+                    txt2+="<option value='"+l[i].split(',')[1]+"'>"+l[i].split(',')[0]+"</option>";
+                }
+                document.getElementById("city-choices-dest").innerHTML+=txt1;
+                document.getElementById("src-city").innerHTML+=txt2;
+            }
+
 
             function select_city(n){
                 var cities = document.getElementsByClassName("head");
@@ -166,7 +203,7 @@
                 
                 cities[n].style.border = "0.5px solid white";
                 cities[n].style.background = "rgba(0,0,0,0.8)"; 
-                dest = cities[n].innerHTML;
+                dest = cities[n].id;
             }
 
             function dispnext(n){
@@ -180,8 +217,21 @@
             }
 
             function start_plan(){
-                window.alert(dest + ", "+ document.getElementById('src-city').value + ", " + document.getElementById('start_date').value + ", " + document.getElementById('end_date').value);
-                window.location.replace("trip_details.html");
+                //window.alert(dest + ", "+ document.getElementById('src-city').value + ", " + document.getElementById('start_date').value + ", " + document.getElementById('end_date').value);
+                
+                var url_param = "?st_place="+document.getElementById('src-city').value+"&dest="+dest+"&st_date="+document.getElementById('start_date').value+"&end_date="+document.getElementById('end_date').value;
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        //window.alert(this.responseText);
+                        window.open("GetTrip?tid=" + this.responseText.split("\n")[0], "_blank");
+                        window.open("trav_hmpg.html", "_self");
+                    }
+                }
+                xhttp.open("GET", "InsertTrip"+url_param, true);
+                xhttp.send();
+
+                //window.location.replace("trip_details.html");
             }
         </script>
     </body>

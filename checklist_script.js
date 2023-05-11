@@ -1,4 +1,6 @@
 function fn1(cid){
+  //window.alert("fn");
+  document.getElementById("myInput").focus();
   // Create a "close" button and append it to each list item
   var myNodelist = document.getElementsByTagName("LI");
   var i;
@@ -17,15 +19,7 @@ function fn1(cid){
     close[i].onclick = function() {
       var div = this.parentElement;
       div.style.display = "none";
-      window.alert(div.id + cid);
-      var xhhtp2 = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          window.alert(this.responseText);
-        }
-      }
-      xhttp.open("GET", "HideChecklistItem?cid="+cid+"&cno="+ev.target.id+"&hide="+1, true);
-      xhttp.send();
+      delitem(div.id, cid);
     }
   }
 
@@ -34,49 +28,67 @@ function fn1(cid){
   list.addEventListener('click', function(ev) {
     if (ev.target.tagName === 'LI') {
       ev.target.classList.toggle('checked');
-      
-      var xhhtp2 = new XMLHttpRequest();
+      //window.alert(ev.target.id + cid + ev.target.classList.contains("checked"));
+      var xhhtp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           this.responseText;
         }
       }
-      
+  
+      //window.alert(ev.target.id + cid + ev.target.classList.contains("checked"));
       if(ev.target.classList.contains("checked")){
+        //window.alert("hide")
         xhttp.open("GET", "HideChecklistItem?cid="+cid+"&cno="+ev.target.id+"&hide="+1, true);
       }
       else{
         xhttp.open("GET", "HideChecklistItem?cid="+cid+"&cno="+ev.target.id+"&hide="+0, true);
       }
       xhttp.send();
-      //window.alert(ev.target.id + cid + ev.target.classList.contains("checked"));
     }
   }, false);
 }
 
-// Create a new list item when clicking on the "Add" button
-function newElement() {
-  var li = document.createElement("li");
-  var inputValue = document.getElementById("myInput").value;
-  var t = document.createTextNode(inputValue);
-  li.appendChild(t);
-  if (inputValue === '') {
-    alert("You must write something!");
-  } else {
-    document.getElementById("myUL").appendChild(li);
-  }
-  document.getElementById("myInput").value = "";
-
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  li.appendChild(span);
-
-  for (i = 0; i < close.length; i++) {
-    close[i].onclick = function() {
-      var div = this.parentElement;
-      div.style.display = "none";
+function delitem(cno, cid){
+  
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      //window.alert(this.responseText);
+      //window.alert("del");
+      this.responseText;
+      get_contents(paramValue, cid);
     }
   }
+  xhttp.open("GET", "DelChecklistItem?cid="+cid+"&cno="+cno, true);
+  xhttp.send();
+}
+
+// Create a new list item when clicking on the "Add" button
+function newElement(cid) {
+  var inputValue = document.getElementById("myInput").value;
+  if (inputValue === '') {
+    alert("You must write something!");
+  }
+  else{
+    document.getElementById("myInput").value = "";
+    var cno = document.getElementsByTagName("li").length;
+    //window.alert(" 1:"+cid +" 2:"+cno + " 3:"+inputValue);
+    additem(cid, (cno+1), inputValue);
+  }
+  
+}
+
+function additem(cid, cno, inputValue){
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {  
+    //window.alert(xhttp.readyState+ xhttp.status);
+    if (this.readyState == 4 && this.status == 200) {
+      //window.alert("additem");
+      this.responseText;
+      get_contents(paramValue, cid);
+    }
+  }
+  xhttp.open("GET", "AddItem?cid="+cid+"&cno="+cno+"&name="+inputValue, true);
+  xhttp.send();
 }

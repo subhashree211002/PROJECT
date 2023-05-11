@@ -34,13 +34,22 @@ public class GetTripDetailsServlet extends HttpServlet {
 			ResultSet rs = stmt.executeQuery(sql);
 
             if(rs.next()){
-                out.println(rs.getString("st_place"));
-                out.println(rs.getString("dest"));
+                Statement stmt1 = conn.createStatement();
+                String sql1 = "SELECT * FROM location WHERE loc_id='"+rs.getString("st_place")+"'";
+                ResultSet rs1 = stmt1.executeQuery(sql1);
+                if(rs1.next()){
+                    out.println(rs1.getString("city"));
+                }
+
+                Statement stmt2 = conn.createStatement();
+                String sql2 = "SELECT * FROM location WHERE loc_id='"+rs.getString("dest")+"'";
+                ResultSet rs2 = stmt1.executeQuery(sql2);
+                if(rs2.next()){
+                    out.println(rs2.getString("city"));
+                }
                 out.println(rs.getString("st_date"));
                 out.println(rs.getString("end_date"));
             }
-
-            
 
             
         }

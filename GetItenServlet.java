@@ -18,7 +18,7 @@ public class GetItenServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("iten.html?tid="+tid);
             rd.forward(request, response);
         }
-        catch(Exception e){
+        catch(Exception e){ 
             System.out.println(e);
         }  
   

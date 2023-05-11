@@ -15,7 +15,9 @@ public class GetSessionServlet extends HttpServlet{
         
             response.setContentType("text/html");
             PrintWriter out = response.getWriter();
-            out.println(session.getAttribute("uid"));
+            out.print(session.getAttribute("uid") + "," + session.getAttribute("utype"));
+
+            out.close();
         }
         catch(Exception e){
             System.out.println(e);

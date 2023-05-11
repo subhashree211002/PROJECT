@@ -17,18 +17,19 @@
                 <img src="images/logo2-1.png" alt="logo" width = 250px;>
             </a>
             <div class ="dropdown">
-                <div id = "prof" style = "display: flex;" onmouseover="noarrow()" onmouseout="arrow()">
-                    <span id = "arrow" style = "font-size:40px; height:fit-content; margin-top:-5px; width:25px;">&#8964;</span>
+                <div id = "prof" style = "display: flex; cursor:pointer;" onmouseover="noarrow()" onmouseout="arrow()">
+                    <span id = "arrow" style = "font-size:40px; height:fit-content; margin-top:px; width:25px;">&#8964;</span>
                     <img src="images/img.jpg" height="50px" style = "margin-top:5px; margin-left:8 px; border-radius:25px;">
                 </div>
                 <p id = "drop">
-                    <span><a href = "trav_profile.html">Profile</a></span><br>
-                    <span><a href = "login.html">Log Out</a></span>
+                    <span><a href = "profile_details.html" style = "cursor:pointer;">Profile</a></span><br>
+                    <span><a onclick = "logout()" style = "cursor:pointer;">Log Out</a></span>
                 </p>
             </div>
         </p>
     </div>
         
+    <!--div style = "position: absolute; background-color:black; height:100vh; width:100vw; z-index:-1;"></div-->
 
     <div id = "page">
         <div id = "user-name-display"></div>
@@ -77,8 +78,10 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                uid = this.responseText;
-                document.getElementById("user-name-display").innerHTML= "Hi @" + uid + ",";
+                uid = this.responseText.split(",")[0];
+                if(uid){
+                    document.getElementById("user-name-display").innerHTML= "Hi traveler, @" + uid + ",";
+                }
             }
         }
         xhttp.open("GET", "GetSession", true);
@@ -95,7 +98,22 @@
         xhttp.open("GET", "GetAllTrips", true);
         xhttp.send();
 
-
+        setInterval(sessionValidater,2000);
+        function sessionValidater(){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    //window.alert(this.responseText);
+                    if(this.responseText.split(",")[0]){
+                    }
+                    else{
+                        window.location.replace("login.html");
+                    }
+                }
+            }
+            xhttp.open("GET", "GetSession", true);
+            xhttp.send();
+        }
         
         
         function assign_trip_boxes(trips){
@@ -107,13 +125,13 @@
                 }
                 var ele = document.getElementsByClassName("trips")[0];
                 //window.alert(trips[i].split(" ")[3]);
-                var content = "<div class = 'trip' onclick = 'get_trip(this);'><div class ='trip-box'><img src = " + bg_images[Math.floor(Math.random() * bg_images.length)] + "><p class = 'trip-name'>" + trips[i].split(" ")[0] + " " + trips[i].split(" ")[1] + "<br>" + trips[i].split(" ")[2] + "<span style = 'color:transparent;'>" + trips[i].split(" ")[3] + "</span></p></div></div>";
+                var content = "<div class = 'trip' onclick = 'get_trip(this);'><div class ='trip-box'><img src = " + bg_images[Math.floor(Math.random() * bg_images.length)] + "><p class = 'trip-name'>" + trips[i].split(" ")[0] + "<br>" + trips[i].split(" ")[1] + "<span style = 'color:transparent;'>" + trips[i].split(" ")[2] + "</span></p></div></div>";
                 ele.innerHTML = content+ele.innerHTML;
             }
         }
 
         function get_trip(ele){
-            window.alert("GetTrip?tid=" + ele.innerText.split("\n")[2]);
+            //window.alert("GetTrip?tid=" + ele.innerText.split("\n")[2]);
             window.open("GetTrip?tid=" + ele.innerText.split("\n")[2], "_blank");
         }
 
@@ -127,6 +145,10 @@
 
         function arrow(){
             document.getElementById("arrow").innerHTML = "&#8964;";
+        }
+
+        function logout(){
+            window.location.replace("LogOut");
         }
 
         function setTextAnimation(delay, duration, strokeWidth, timingFunction, strokeColor,repeat) {

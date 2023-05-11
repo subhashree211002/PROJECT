@@ -34,7 +34,14 @@ public class GetAllTripsServlet extends HttpServlet {
 			ResultSet rs = stmt.executeQuery(sql);
 
             while(rs.next()){
-                out.print(rs.getString("dest") + " (" + rs.getDate("st_date") + ") " + rs.getString("trip_id")  + ",");
+                Statement stmt1 = conn.createStatement();
+                String sql1 = "SELECT * FROM location WHERE loc_id='"+rs.getString("dest")+"'";
+                ResultSet rs1 = stmt1.executeQuery(sql1);
+                String city = "";
+                if(rs1.next()){
+                    city = rs1.getString("city");
+                }
+                out.print(city + " (" + rs.getDate("st_date") + ") " + rs.getString("trip_id")  + ",");
             }
             
         }

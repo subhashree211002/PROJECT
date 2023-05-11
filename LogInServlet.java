@@ -35,16 +35,19 @@ public class LogInServlet extends HttpServlet {
             if(rs.next() && pwd.equals(rs.getString("password"))){
                //out.println(uname + ",, " +pwd);
                 out.println("1");
+                out.println(rs.getString("utype"));
             }
             else{
                 out.println("0");
             }
             
+            conn.close();
+            
 
         }
         catch(Exception e){
             System.out.println(e);
-        }  
+        }
   
     }  
 }  

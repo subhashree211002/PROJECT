@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add Budget</title>
+        <meta charset="utf-8">
+        <style>
+
+form{
+            margin: auto;
+            margin-top: 10px; 
+            width:450px;
+            height:490px; 
+            display:flex;
+            flex-direction:column; 
+            justify-content:center; 
+            align-items:center;
+            text-align: center; 
+            color: white;
+            text-shadow: black 2px 2px 2px;;
+            font-size: 20px;
+            opacity: 70%;
+            background-color: black; 
+            box-shadow: 3px 3px 5px 2px rgb(255, 255, 255), 0 0 20px black;
+        }
+        .options{
+            display: flex;
+        }
+
+        .options input{
+            margin: auto;
+        }
+
+        </style>
+    </head>
+    <body style="background-image:url('images/painting-1682416389136-9172.jpg'); background-repeat:no-repeat; background-size:cover; opacity:1;">
+            <div class="view-page">
+                <form method="get" action="http://localhost:8080/MINIPROJECT/InsertItin">
+                    <label for="trip_id">Trip ID: </label>
+                    <br>
+                    <input style="width: 200px; height: 30px;" type="text" name="trip_id" id="trip_id" required placeholder="Enter Trip ID">
+                    <label for="trip_id">Itinerary ID: </label>
+                    <br>
+                    <input style="width: 200px; height: 30px;" type="text" name="it_id" id="it_id" required placeholder="Enter Itinerary ID">
+                    <label for="tourist_spot">Tourist Spot: </label>
+                    <br>
+                    <input style="width: 200px; height: 30px;" type="text" name="tourist_spot" id="tourist_spot" required placeholder="Enter Tourist Spot">
+                    <label for="dov">Date Of Visit: </label>
+                    <br>
+                    <input style="width: 200px; height: 30px;" type="text" name="dov" id="dov" required placeholder="Enter Date of Visit">
+                    <label for="st_time">Start Time: </label>
+                    <br>
+                    <input style="width: 200px; height: 30px;" type="text" name="st_time" id="st_time" required placeholder="Enter Start Time">
+                    <label for="duration">Duration: </label>
+                    <br>
+                    <input style="width: 200px; height: 30px;" type="text" name="duration" id="duration" required placeholder="Enter Duration">
+                    <input type="submit" value="Add Itinerary" style="width: 150px;height:30px;margin:auto;margin-top:20px">
+                </form> 
+            </div> 
+    </body>
+</html>

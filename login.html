@@ -84,7 +84,7 @@
 
     form{
         width:500px;
-        height:300px;
+        height:350px;
         margin:auto; 
         background-color:rgba(0,0,0,0.8); 
         display:flex; 
@@ -128,6 +128,8 @@
         font-size: 15px;
         border:1px solid white;
         justify-content: center;
+        margin-top:20px;
+        margin-bottom:30px;
     }
 
     button:hover{
@@ -169,7 +171,32 @@
     </footer>
 
     <script>
-        window.onload(document.getElementById("uname").focus());
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                //window.alert(this.responseText);
+            }
+        }
+        xhttp.open("GET", "GetSession", true);
+        xhttp.send();
+        
+        setInterval(sessionValidater,2100);
+        function sessionValidater(){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    //window.alert(this.responseText);
+                    if(this.responseText.split(",")[0]){
+                        window.location.replace("trav_hmpg.html");
+                    }
+                }
+            }
+            xhttp.open("GET", "GetSession", true);
+            xhttp.send();
+        }
+        
+        
+        
 
         function logscreen(){
             document.getElementById("log-in").style.backgroundColor = "rgba(30,30,30,0.8)";
@@ -207,6 +234,7 @@
             xhttp.onreadystatechange = function() {
               if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("form-page").innerHTML = "";
+                //window.alert(this.responseText);
                 document.getElementById("form-page").innerHTML =this.responseText;
                 if(document.getElementsByClassName("sign-page").length!=0){
                     document.getElementsByClassName("sign-page")[0].style.opacity = 0;
@@ -221,10 +249,10 @@
             };
 
             if(n == 1){
-                xhttp.open("GET", "loginform.html", true);
+                xhttp.open("GET", "loginf.html", true);
             }
             if(n==2){
-                xhttp.open("GET", "signup.html", true);
+                xhttp.open("GET", "signupform.html", true);
             }
             xhttp.send();
         }
@@ -294,6 +322,7 @@
             var url = "LogIn?uid="+document.getElementById("uname").value+"&pwd="+document.getElementById("pwd").value;
             xhttp.onreadystatechange = function() {
               if (this.readyState == 4 && this.status == 200) {
+                    //window.alert(this.responseText);
                     login_stat(this.responseText);   
               }
             };  
@@ -301,18 +330,92 @@
             xhttp.send();
         }
 
-        function login_stat(stat){
-            window.alert(stat);
+        function login_stat(txt){
+            var stat = txt.split("\n")[0];
+            var type = txt.split("\n")[1];
             if(parseInt(stat)==1){
-                window.location.href = "SessionInitiate?uid="+document.getElementById("uname").value;
+                window.location.replace("SessionInitiate?uid="+document.getElementById("uname").value+"&utype="+type+"&new_user=0");
             }
             else{
+                //window.alert(txt);
                 document.getElementsByTagName("form")[0].reset();
                 document.getElementById("uname").focus();
                 document.getElementsByClassName("error")[0].innerHTML = "Incorrect username or password!";
             }
         }
 
+        function val_signup(){
+            var role = document.getElementById('type').value;
+            var uname;
+            uname = document.getElementById('uname').value;
+            var pwd1 = document.getElementById('pwd').value;
+            var pwd2 = document.getElementById('cnfrm-password').value;
+            //window.alert(role+uname+pwd1+pwd2);
+            
+            if(uname==""){
+                document.getElementById("uname").focus();
+                document.getElementsByClassName("error")[0].innerHTML = "User name cannot be empty";
+                return;
+            }
+            else{
+                var xhttp = new XMLHttpRequest();
+                var url = "ValidateUname?uid="+uname;
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        if(parseInt(this.responseText)==0){
+                            document.getElementById("uname").focus();
+                            document.getElementsByClassName("error")[0].innerHTML = "The user name exists!";
+                            return;
+                        }
+                        else{
+                            //out.println(uname);
+                            if(pwd1==pwd2){
+                                var t = val_pwd(pwd1);
+                                if(t==""){
+                                    var data = "role="+role+"&uid=" + uname + "&pwd=" + pwd1;
+                                    window.location.replace("InsertUser?"+data);
+                                }
+                                else{
+                                    document.getElementsByClassName("error")[0].innerHTML = t;
+                                    return;
+                                }
+                            }
+                            else{
+                                document.getElementById("pwd").focus();
+                                document.getElementsByClassName("error")[0].innerHTML = "Passwords do not match!";
+                                return;
+                            }
+                        }
+                    }
+                };  
+                xhttp.open("GET", url, true);
+                xhttp.send();
+            }
+        }
+
+        function val_pwd(pwd) {
+            txt = "";
+            if(pwd.length < 8){
+                txt += "Password must contain atleast 8 characters<br>";
+            }
+            var patt = /[A-Z]/;
+            if(patt.test(pwd) == false){
+                txt += "Password must contain atleast 1 uppercase letter<br>";
+            }
+            var patt = /[a-z]/;
+            if(patt.test(pwd) == false){
+                txt += "Password must contain atleast 1 lowercase letter<br>";
+            }
+            var patt = /[0-9]/;
+            if(patt.test(pwd) == false){
+                txt += "Password must contain atleast 1 digit<br>";
+            }
+            var patt = /[!@#\$%\^&\*()_]/;
+            if(patt.test(pwd) == false){
+                txt+= "Password must contain atleast 1 special character<br>";
+            }
+            return txt;
+        }
         
     </script>
 

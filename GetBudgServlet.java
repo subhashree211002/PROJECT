@@ -15,11 +15,11 @@ public class GetBudgServlet extends HttpServlet {
             
             String uid = (String)session.getAttribute("uid");
             String tid = (String)request.getParameter("tid");
-            RequestDispatcher rd = request.getRequestDispatcher("budg.html?tid="+tid);
+            RequestDispatcher rd = request.getRequestDispatcher("budg_new.html?tid="+tid);
             rd.forward(request, response);
         }
         catch(Exception e){
-            System.out.println(e);
+            System.out.println(e); 
         }  
   
     }  
